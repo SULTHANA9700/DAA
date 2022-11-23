@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include<stdlib.h>
+int maximumUnits(int** boxTypes, int boxTypesSize, int* boxTypesColSize, int truckSize){
+    int i,j,a[boxTypesSize],b[boxTypesSize],p=0,max,k;
+for(i=0;i<boxTypesSize;i++){
+    a[i]=boxTypes[i][0];
+    b[i]=boxTypes[i][1];
+}
+while(truckSize!=0){
+for(j=0;j<boxTypesSize;j++){
+    max=0;
+    for(i=0;i<boxTypesSize;i++){
+        if(b[i]>max){
+            max=b[i];
+            k=i;
+        }
+    }
+        if(a[k]<=truckSize){
+            p=p+(a[k]*b[k]);
+            b[k]=0;
+            truckSize=truckSize-a[k];
+        }
+        else{
+            p=p+b[k]*truckSize;
+            truckSize=0;
+            j=boxTypesSize;
+        }
+        
+}
+}
+return p;
+}
+void main(){
+     int r,c,t,i,j;
+     printf("enter r c t");
+    scanf("%d%d%d",&r,&c,&t);
+
+    int** arr = (int**)malloc(r*sizeof(int*));
+    for (i = 0; i < r; i++)
+       { arr[i] = (int*)malloc(c*sizeof(int));
+       }
+       
+       printf("enter elements");
+    for (i = 0; i < r; i++)
+       { for (j = 0; j < c; j++)
+           { scanf("%d",&arr[i][j]);
+ 
+           }
+       }
+       printf("maximum total number of units: ");
+       printf("%d",maximumUnits(arr,r,c,t));
+}
