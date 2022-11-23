@@ -1,0 +1,85 @@
+912. Sort an Array
+Given an array of integers nums, sort the array in ascending order and return it.
+
+You must solve the problem without using any built-in functions in O(nlog(n)) time complexity and with the smallest space complexity possible.
+
+
+
+Constraints:
+
+1 <= nums.length <= 5 * 104
+-5 * 104 <= nums[i] <= 5 * 104
+CODE:
+
+#include <stdio.h>
+
+void merge(int arr[],int p,int q,int r){
+    int m=q-p+1;
+    int n=r-q;
+    int A[m],B[n];
+    for(int i=0;i<m;i++){
+        A[i]=arr[p+i];
+    }
+     for(int i=0;i<n;i++){
+        B[i]=arr[q+1+i];
+    }
+    int i=0,j=0,k=p;
+    while(i<m && j<n){
+        if(A[i]<B[j]){
+            arr[k++]=A[i++];
+        }
+        else{
+            arr[k++]=B[j++];
+        }
+    }
+    for(;i<m;i++){
+        arr[k++]=A[i];
+    }
+     for(;j<n;j++){
+        arr[k++]=B[j];
+    }
+}
+void mergesort(int arr[],int low,int high){
+    if(low<high){
+       int mid=(high+low)/2;
+        mergesort(arr,low,mid);
+        mergesort(arr,mid+1,high);
+        merge(arr,low,mid,high);
+ }
+}
+int* sortArray(int* nums, int numsSize, int* returnSize){
+    mergesort(nums,0,numsSize-1);
+    *returnSize=numsSize;
+    return nums;
+}
+
+
+
+int main()
+{int n;
+    printf("enter n");
+scanf("%d",&n);
+int b[30];
+int a[30]={0};
+printf("enter elements");
+for(int i=0;i<n;i++){
+    scanf("%d",&b[i]);
+}
+    int* c=sortArray(b,5,a);
+    printf("after sorting\n");
+    for(int i=0;i<n;i++){
+    printf("%d ",c[i]);
+    }
+}
+
+output1:
+enter n4
+enter elements5 2 3 1
+after sorting
+1 2 3 5
+
+output 2:
+enter n6
+enter elements5 1 1 2 0 0
+after sorting
+0 1 1 2 5 0 
