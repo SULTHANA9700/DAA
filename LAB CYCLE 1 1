@@ -1,0 +1,221 @@
+21. Merge Two Sorted Lists
+
+You are given the heads of two sorted linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
+
+
+
+Constraints:
+
+The number of nodes in both lists is in the range [0, 50].
+-100 <= Node.val <= 100
+Both list1 and list2 are sorted in non-decreasing order.
+
+
+code:
+#include<stdio.h>
+#include<stdlib.h>
+//Definition for singly-linked list.
+struct ListNode {
+int val;
+struct ListNode *next;
+}*newnode,*list1,*list2,*temp1,*temp2,*temp;
+struct ListNode* head=NULL;
+struct ListNode* tail=NULL;
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+temp1=list1;
+  temp2=list2;
+while(temp1!=NULL && temp2!=NULL)
+{
+    struct ListNode* newnode=(struct ListNode*)malloc(sizeof(struct ListNode));
+    if(temp1->val<temp2->val)
+    {
+        newnode->val=temp1->val;
+        newnode->next=NULL;
+       
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;  
+        }
+        temp1=temp1->next;
+    }
+    else
+    {
+        newnode->val=temp2->val;
+        newnode->next=NULL;
+       
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;  
+        }
+         temp2=temp2->next;
+    }
+   
+}
+    for(;temp2!=NULL; temp2=temp2->next)
+    {
+       struct ListNode* newnode=(struct ListNode*)malloc(sizeof(struct ListNode));
+        newnode->val=temp2->val;
+        newnode->next=NULL;
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;  
+        }
+       
+    }
+    for(;temp1!=NULL;temp1=temp1->next)
+    {
+        struct ListNode* newnode=(struct ListNode*)malloc(sizeof(struct ListNode));
+        newnode->val=temp1->val;
+        newnode->next=NULL;
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;  
+        }
+    }
+    return head;
+}
+
+struct ListNode* create(struct ListNode* head)
+{
+    char ch;
+    int value;
+            printf("Enter c-continue and e-exit:\n");
+        fflush(stdin);
+        scanf(" %c",&ch);
+   
+    while(ch == 'c'){
+        newnode=(struct ListNode*)malloc(sizeof(struct ListNode));
+        printf("Enter the value:\n");
+        scanf("%d",&value);
+        newnode->val=value;
+        newnode->next=NULL;
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;
+        }
+        printf("Enter c-continue and e-exit:\n");
+        fflush(stdin);
+        scanf(" %c",&ch);
+    }
+    return head;
+}
+
+void display(struct ListNode* head)
+{
+    temp=head;
+    while(temp!=NULL)
+    {
+    printf("%d->",temp->val);
+    temp=temp->next;
+    }
+}
+
+void main()
+{
+    struct ListNode *a,*b,*k;
+    printf("Enter the values of list1\n");
+    a=create(list1);
+    display(a);
+    printf("\n");
+    printf("Enter the values of list2\n");
+    b=create(list2);
+    display(b);
+    printf("\n");
+    k=mergeTwoLists(a,b);
+    display(k);
+}
+
+
+output 1:
+Enter the values of list1
+Enter c-continue and e-exit:
+c
+Enter the value:
+1
+Enter c-continue and e-exit:
+c
+Enter the value:
+2
+Enter c-continue and e-exit:
+c
+Enter the value:
+4
+Enter c-continue and e-exit:
+e
+1->2->4->
+Enter the values of list2
+Enter c-continue and e-exit:
+c
+Enter the value:
+1
+Enter c-continue and e-exit:
+c
+Enter the value:
+3
+Enter c-continue and e-exit:
+c
+Enter the value:
+4
+Enter c-continue and e-exit:
+e
+1->3->4->
+1->1->2->3->4->4->
+
+output2:
+Enter the values of list1
+Enter c-continue and e-exit:
+e
+
+Enter the values of list2
+Enter c-continue and e-exit:
+e
+
+output3:
+Enter the values of list1
+Enter c-continue and e-exit:
+e
+
+Enter the values of list2
+Enter c-continue and e-exit:
+c
+Enter the value:
+0
+Enter c-continue and e-exit:
+e
+0->
+0->
