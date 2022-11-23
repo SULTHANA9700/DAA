@@ -1,0 +1,199 @@
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+
+Merge all the linked-lists into one sorted linked-list and return it.
+
+Constraints:
+
+
+k == lists.length
+0 <= k <= 104
+0 <= lists[i].length <= 500
+-104 <= lists[i][j] <= 104
+lists[i] is sorted in ascending order.
+The sum of lists[i].length will not exceed 104.
+code:
+
+#include<stdio.h>
+#include<stdlib.h>
+//Definition for singly-linked list.
+struct ListNode {
+int val;
+struct ListNode *next;
+}*newnode,*list1,*list2,*temp1,*temp2,*temp;
+struct ListNode* head=NULL;
+struct ListNode* tail=NULL;
+
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+  struct ListNode* l1=list1;
+struct ListNode* l2=list2;
+    struct ListNode* f;
+    struct ListNode* n=NULL;
+   if(l1==NULL){
+       return l2;
+   }
+    else if(l2==NULL){
+        return l1;
+    }
+    if(l1->val<=l2->val){
+        n=l1;
+        l1=l1->next;
+    }else{
+        n=l2;
+        l2=l2->next;
+    }
+    f=n;
+    while(l1!=NULL && l2!=NULL){
+        struct ListNode* t=NULL;
+        if(l1->val<l2->val){
+            t=l1;
+            l1=l1->next;
+        }else{
+            t=l2;
+            l2=l2->next;
+        }
+        f->next=t;
+        f=t;
+    }
+    if(l1!=NULL){
+        f->next=l1;
+    }else if(l2!=NULL){
+        f->next=l2;
+    }
+    return n;
+}
+struct ListNode* create(struct ListNode* head)
+{
+    char ch;
+    int value;
+            printf("Enter c-continue and e-exit:\n");
+        fflush(stdin);
+        scanf(" %c",&ch);
+   
+    while(ch == 'c'){
+        newnode=(struct ListNode*)malloc(sizeof(struct ListNode));
+        printf("Enter the value:\n");
+        scanf("%d",&value);
+        newnode->val=value;
+        newnode->next=NULL;
+        if(head==NULL)
+        {
+            head=newnode;
+            tail=newnode;
+        }
+        else
+        {
+            tail->next=newnode;
+            tail=newnode;
+        }
+        printf("Enter c-continue and e-exit:\n");
+        fflush(stdin);
+        scanf(" %c",&ch);
+    }
+    return head;
+}
+
+void display(struct ListNode* head)
+{
+    temp=head;
+    while(temp!=NULL)
+    {
+    printf("%d->",temp->val);
+    temp=temp->next;
+    }
+}
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize){
+struct ListNode* temp=NULL;
+for(int i=0;i<listsSize;i++){
+    temp=mergeTwoLists(temp,lists[i]);
+}
+return temp;
+}
+int main()
+{
+int n;
+printf("enter no. of lists");
+scanf("%d",&n);
+struct ListNode* l[3]={NULL};
+for(int i=0;i<n;i++)
+{
+struct ListNode* h1=NULL;
+printf("\nenter %dlist\n",i+1);
+l[i]=create(h1);
+printf("initial list\n");
+display(l[i]);
+}
+struct ListNode* p=mergeKLists(l,n);
+printf("\nafter sorting  ");
+display(p);
+
+}
+
+output1:
+
+enter no. of lists3
+
+enter 1list
+Enter c-continue and e-exit:
+c
+Enter the value:
+1
+Enter c-continue and e-exit:
+c
+Enter the value:
+4
+Enter c-continue and e-exit:
+c
+Enter the value:
+5
+Enter c-continue and e-exit:
+e
+initial list
+1->4->5->
+enter 2list
+Enter c-continue and e-exit:
+c
+Enter the value:
+1
+Enter c-continue and e-exit:
+c
+Enter the value:
+3
+Enter c-continue and e-exit:
+c
+Enter the value:
+4
+Enter c-continue and e-exit:
+e
+initial list
+1->3->4->
+enter 3list
+Enter c-continue and e-exit:
+c
+Enter the value:
+2
+Enter c-continue and e-exit:
+c
+Enter the value:
+6
+Enter c-continue and e-exit:
+e
+initial list
+2->6->
+after sorting  1->1->2->3->4->4->5->6->
+
+output2:
+enter no. of lists0
+
+after sorting  
+
+output3:
+enter no. of lists1
+
+enter 1list
+Enter c-continue and e-exit:
+e
+initial list
+
+after sorting  
+
+
